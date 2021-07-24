@@ -1,28 +1,60 @@
-import React, {useState} from 'react';
-import "../../assets/styles/components/SearchBar.css"
-import { useHistory } from 'react-router-dom';
+import React, { useState } from "react";
+import "../../assets/styles/components/SearchBar.css";
+import { useHistory } from "react-router-dom";
+import { useUserData } from "../../hooks/useUserData";
 
 const SearchBar = () => {
     const [keyword, setKeyword] = useState("");
+    const { isLogged } = useUserData();
     let history = useHistory();
-    //console.log(history)
 
-    const handleInputSearch =(e)=>{
+    const handleInputSearch = (e) => {
         console.log(e.target.value);
         setKeyword(e.target.value);
-    }
+    };
 
-    const handleSubmit=(e)=>{
+    const handleSearchSubmit = (e) => {
         e.preventDefault();
-        history.push(`/search/${keyword}`);
-    }
+        if (isLogged) {
+            history.push(`/search/${keyword}`);
+            return;
+        }
+        history.push("/login");
+    };
 
     return (
-        <form className="searchbar-container">
-            <input type="text" onChange={handleInputSearch} placeholder="Buscar superhéroe..."/>
-            <input type="submit" value="Buscar" onClick={handleSubmit}/>
+        <form
+            className="flex searchbar-container"
+            onSubmit={handleSearchSubmit}
+        >
+            {/* <input
+                type="text"
+                onChange={handleInputSearch}
+                placeholder="Buscar superhéroe..."
+            /> 
+            <input type="submit" value="Buscar"/>
+            
+            */}
+            <div className="input-group mb-3">
+                <input
+                    onChange={handleInputSearch}
+                    type="text"
+                    className="form-control"
+                    placeholder="Buscar superhéroe..."
+                    aria-label="Buscador"
+                    aria-describedby="input-search"
+                />
+                <input
+                    className="btn-custom"
+                    type="submit"
+                    id="input-search"
+                    value="Buscar"
+                />
+            </div>
         </form>
-    )
-}
+    );
+};
+
+<div class="input-group mb-3"></div>;
 
 export default SearchBar;

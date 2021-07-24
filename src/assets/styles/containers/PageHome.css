@@ -1,3 +1,8 @@
 .home-container {
     background-image: url(../../statics/fondo.svg);
+    min-height: 75vh;
 }
+
+/* @media (min-width: 800px){
+
+} */

@@ -1,9 +1,13 @@
-/* .searchbar-container{
-    *justify-content: center;
-    text-align: center;
-    
-} */
+.btn {
+    background-color: var(--primary-color);
+}
 
-/* .searchbar-container input{
-    max-width: 320px;
-} */
+@media (min-width: 800px) {
+    .searchbar-container {
+        justify-content: center;
+    }
+
+    .searchbar-container .input-group {
+        width: 70%;
+    }
+}

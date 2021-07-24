@@ -1,0 +1,17 @@
+.login-container {
+    width: 100%;
+    min-height: 70vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container form {
+    width: 320px;
+    height: 50%;
+}
+
+@media (min-width: 800px) {
+    .login-container form {
+        width: 360px;
+    }
+}
