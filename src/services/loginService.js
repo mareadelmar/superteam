@@ -7,10 +7,14 @@ export function loginService({ email, password }) {
             password: password,
         })
         .then((res) => {
-            return res;
+            console.log(res);
+            console.log(res.status);
+            const { token } = res.data;
+            return token;
         })
-        .catch((err) => {
-            console.error(err);
-            return err;
+        .catch((error) => {
+            console.error(error);
+            console.log(error.message);
+            return error.message;
         });
 }

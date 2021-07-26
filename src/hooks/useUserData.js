@@ -4,41 +4,66 @@ import { loginService } from "../services/loginService";
 
 export function useUserData() {
     const { token, setToken } = useContext(UserContext);
+
     const [loading, setLoading] = useState(false);
     const [isLogged, setIsLogged] = useState(false);
-    // const [errorMessage, setErrorMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
-    // guardar esta función en un useCallback
+    // LOGIN
     const getLogin = useCallback(
         ({ email, password }) => {
             console.log("entrando a login en el hook");
             setLoading(true);
             loginService({ email, password })
-                .then((res) => {
-                    console.log(res.data, "logueado correctamente en el hook");
-                    setToken(res.data.token);
+                .then((dataToken) => {
+                    //console.log(dataToken.error);
+                    if (dataToken === "Request failed with status code 401") {
+                        setErrorMessage(
+                            "El nombre o la contraseña no son correctos."
+                        );
+                        return;
+                    }
+                    console.log(dataToken, "logueado correctamente en el hook");
                     setLoading(false);
+                    setToken(dataToken);
+                    window.localStorage.setItem("token", token);
                 })
-                .catch((err) => console.error(err));
+                .catch((err) => {
+                    // el error no llega a este catch
+                    setToken(null);
+                    setIsLogged(false);
+                    console.error(err);
+                    console.log(err);
+                    window.localStorage.removeItem("token");
+                    // ??? --> window.localStorage.removeItem(`team-${token}`);
+                });
         },
-        [setToken]
+        [setToken, token]
     );
 
-    // guardar esta función en un useCallback
-    const getLogout = () => {
+    // LOGOUT
+    const getLogout = useCallback(() => {
         console.log("logout en el hook");
         setToken(null);
+        //setIsLogged(false);
         // limpiar LOCALSTORAGE
-    };
+        // window.localStorage.removeItem("token");
+        // window.localStorage.removeItem(`team-${token}`);
+    }, [setToken]);
 
     useEffect(() => {
-        if (token !== null) {
-            console.log("está logueado");
+        if (token !== null && token !== undefined) {
+            console.log("está logueado", token);
             setIsLogged(true);
+        } else if (token === undefined) {
+            setIsLogged(false);
+            console.log("error", token);
+            setToken(null);
         } else {
+            setToken(null);
             setIsLogged(false);
         }
-    }, [token]);
+    }, [token, setToken]);
 
     return {
         getLogin,
@@ -46,6 +71,6 @@ export function useUserData() {
         isLogged,
         loading,
         token,
-        setToken,
+        errorMessage,
     };
 }

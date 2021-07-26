@@ -4,13 +4,9 @@ import "../../assets/styles/components/Login.css";
 import { useUserData } from "../../hooks/useUserData";
 
 const Login = () => {
-    /* 
-    falta donde hacer el LOGOUT --> crear nav en el header
-    */
-
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
-    const { getLogin, isLogged } = useUserData();
+    const { getLogin, isLogged, errorMessage } = useUserData();
     let history = useHistory();
 
     useEffect(() => {
@@ -54,6 +50,9 @@ const Login = () => {
                     <label htmlFor="floatingPassword">Contraseña:</label>
                 </div>
 
+                {errorMessage ? (
+                    <div className="alert-danger">{errorMessage}</div>
+                ) : null}
                 <input
                     type="submit"
                     className="btn w-100 btn-lg btn-primary mt-3 mb-3"
