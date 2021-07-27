@@ -6,6 +6,7 @@ export function getCharacters({ keyword }) {
 
     return axios.get(url).then((data) => {
         console.log(data.data.results);
+
         let results = data.data.results.map((item) => {
             const { id, name, powerstats, appearance, work, image, biography } =
                 item;

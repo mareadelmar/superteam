@@ -2,21 +2,24 @@ import { useState, useContext, useEffect } from "react";
 import { getCharacters } from "../services/getCharacters";
 import ResultsContext from "../context/SearchResultContext";
 
-export function useCharacters({keyword}){
-    const {results, setResults} = useContext(ResultsContext);
+export function useCharacters({ keyword }) {
+    const { results, setResults } = useContext(ResultsContext);
     const [loading, setLoading] = useState(false);
 
-    useEffect(()=>{
+    useEffect(() => {
         setLoading(true);
-        getCharacters({keyword}).then(res=>{
+        getCharacters({ keyword }).then((res) => {
+            /*
+            Condicionar si arreglo está vacío y devolver mensaje
+            */
             setResults(res);
             setLoading(false);
-        })
-    },[keyword, setResults])
+        });
+    }, [keyword, setResults]);
 
     return {
         loading,
         results,
-        setResults
-    }
+        setResults,
+    };
 }

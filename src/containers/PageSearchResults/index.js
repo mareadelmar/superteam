@@ -1,11 +1,9 @@
-import React, { useContext, useEffect } from "react";
-//import { useHistory } from "react-router";
+import React from "react";
 import "../../assets/styles/containers/PageSearch.css";
 import { useParams } from "react-router-dom";
 import { useCharacters } from "../../hooks/useCharacters";
 import SearchBar from "../../components/SearchBar";
-import ListOfResults from "../../components/ListOfResults";
-import UserContext from "../../context/UserDataContext";
+import ListOfItems from "../../components/ListOfItems";
 import Loader from "../../components/Loader";
 
 const PageSearchResults = () => {
@@ -16,7 +14,7 @@ const PageSearchResults = () => {
     return (
         <section className="container search-container">
             <SearchBar />
-            <ListOfResults results={results} />
+            <ListOfItems list={results} />
         </section>
     );
 };

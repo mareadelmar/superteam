@@ -1,6 +1,7 @@
 import { useState, useContext, useCallback, useEffect } from "react";
 import UserContext from "../context/UserDataContext";
 import { loginService } from "../services/loginService";
+import { useHistory } from "react-router-dom";
 
 export function useUserData() {
     const { token, setToken } = useContext(UserContext);
@@ -8,6 +9,7 @@ export function useUserData() {
     const [loading, setLoading] = useState(false);
     const [isLogged, setIsLogged] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    let history = useHistory();
 
     // LOGIN
     const getLogin = useCallback(
@@ -26,7 +28,7 @@ export function useUserData() {
                     console.log(dataToken, "logueado correctamente en el hook");
                     setLoading(false);
                     setToken(dataToken);
-                    window.localStorage.setItem("token", token);
+                    window.localStorage.setItem("token", dataToken);
                 })
                 .catch((err) => {
                     // el error no llega a este catch
@@ -38,21 +40,22 @@ export function useUserData() {
                     // ??? --> window.localStorage.removeItem(`team-${token}`);
                 });
         },
-        [setToken, token]
+        [setToken]
     );
 
     // LOGOUT
     const getLogout = useCallback(() => {
         console.log("logout en el hook");
         setToken(null);
+        history.push("/");
         //setIsLogged(false);
         // limpiar LOCALSTORAGE
         // window.localStorage.removeItem("token");
         // window.localStorage.removeItem(`team-${token}`);
-    }, [setToken]);
+    }, [setToken, history]);
 
     useEffect(() => {
-        if (token !== null && token !== undefined) {
+        if (token !== null && token !== undefined && token !== "null") {
             console.log("está logueado", token);
             setIsLogged(true);
         } else if (token === undefined) {

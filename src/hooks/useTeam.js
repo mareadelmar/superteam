@@ -7,9 +7,6 @@ export const useTeam = () => {
     const { teamGood, teamBad, setTeamGood, setTeamBad } =
         useContext(UserContext);
 
-    // ====== ADDTOTEAM =======
-    // función para agregar al equipo: MOVER A OTRO HOOK? agregar función eliminar del equipo tmb
-    // acá ya sabemos que no lo tiene agregado y que hay lugr en el equipo que iría
     const addToTeam = useCallback(
         ({ id, alignment }) => {
             let selectedCharacter = "";
@@ -38,9 +35,27 @@ export const useTeam = () => {
         [results, setTeamGood, setTeamBad, teamBad, teamGood]
     );
 
-    const removeFromTeam = ({ id }) => {
-        // eliminar del team
-    };
+    const removeFromTeam = useCallback(
+        ({ id, alignment }) => {
+            console.log("entrando a eliminar", alignment);
+            if (alignment === "good") {
+                const newTeam = teamGood.filter((item) => {
+                    console.log(id, item.id);
+
+                    return item.id !== id;
+                });
+                setTeamGood(newTeam);
+            } else {
+                const newTeam = teamBad.filter((item) => {
+                    console.log(id, item.id);
+                    return item.id !== id;
+                });
+                setTeamBad(newTeam);
+            }
+            console.log("eliminar miembro", teamBad, teamGood);
+        },
+        [teamGood, teamBad, setTeamGood, setTeamBad]
+    );
 
     return {
         addToTeam,

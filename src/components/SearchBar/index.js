@@ -9,7 +9,6 @@ const SearchBar = () => {
     let history = useHistory();
 
     const handleInputSearch = (e) => {
-        console.log(e.target.value);
         setKeyword(e.target.value);
     };
 

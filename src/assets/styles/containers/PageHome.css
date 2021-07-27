@@ -1,5 +1,5 @@
 .home-container {
-    background-image: url(../../statics/fondo.svg);
+    *background-image: url(../../statics/fondo.svg);
     min-height: 75vh;
 }
 

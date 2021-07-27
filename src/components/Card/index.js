@@ -1,20 +1,15 @@
 import React from "react";
-import "../../assets/styles/components/Card.css";
 import { Link } from "react-router-dom";
 import AddButton from "../AddButton";
+import notFound from "../../assets/statics/not-found.png";
 
-const Card = ({ img, name, id, alignment }) => {
-    /*
-    click en Card lleva a detalles del personaje.
-    */
-
+const Card = ({ url, name, id, alignment }) => {
     return (
-        <div className="col-md-3 card-container">
-            <div className="card mt-3">
-                <Link to="/">
-                    <img src={img} alt="character" className="card-img" />
-                </Link>
-
+        <div className="col-12 col-sm-6 col-md-4 col-lg-3 card-container">
+            <div className="card mt-3 ">
+                <object data={url}>
+                    <img src={notFound} alt={name} className="card-img" />
+                </object>
                 <div className="card-body">
                     <h5>{name}</h5>
                     <AddButton id={id} alignment={alignment} />
@@ -24,6 +19,12 @@ const Card = ({ img, name, id, alignment }) => {
     );
 };
 
-// hacer un componente aparte del button para agregar al team?
-
 export default Card;
+
+/*
+Nombre del héroe.
+Imagen.
+Acciones para agregarlo al equipo
+
+
+*/

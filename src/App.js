@@ -20,11 +20,16 @@ function App() {
                     <SearchResultContext>
                         <Route exact path="/" component={PageHome} />
                         <Route
+                            exact
                             path="/search/:keyword"
                             component={PageSearchResults}
                         />
-                        <Route path="/character/:id" component={PageDetails} />
-                        <Route path="/login" component={Login} />
+                        <Route
+                            exact
+                            path="/character/:id"
+                            component={PageDetails}
+                        />
+                        <Route exact path="/login" component={Login} />
                         {/* <Route
                                 render={() => <h1>404: page not found</h1>}
                             /> */}
