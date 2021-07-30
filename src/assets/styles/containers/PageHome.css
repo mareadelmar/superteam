@@ -1,8 +1,12 @@
 .home-container {
-    *background-image: url(../../statics/fondo.svg);
     min-height: 75vh;
 }
 
-/* @media (min-width: 800px){
+.welcome {
+    background: var(--secondary-color) !important;
+    border-radius: 1em;
+}
 
+/* @media (min-width: 992px){
+    
 } */

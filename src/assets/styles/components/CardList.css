@@ -1,19 +1,23 @@
+.card {
+    background: #035482 !important;
+    border-radius: 1em !important;
+}
+
 .card-body {
     flex-direction: column;
 }
 
 .cardlist-img {
     max-width: 264px;
-    margin-bottom: 1em;
 }
 
 .card-content {
     width: 100%;
-    margin-left: 1em;
 }
 
-.btn {
-    margin: 1em;
+.list-group li {
+    background: #035482 !important;
+    color: var(--light-color) !important;
 }
 
 @media (min-width: 992px) {

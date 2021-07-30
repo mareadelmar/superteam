@@ -14,26 +14,19 @@ const SearchBar = () => {
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
-        if (isLogged) {
-            history.push(`/search/${keyword}`);
+        if (!isLogged) {
+            history.push("/login");
             return;
         }
-        history.push("/login");
+        if (keyword === "") return;
+        history.push(`/search/${keyword}`);
     };
 
     return (
         <form
-            className="flex searchbar-container"
+            className="d-flex searchbar-container mt-5 mb-5"
             onSubmit={handleSearchSubmit}
         >
-            {/* <input
-                type="text"
-                onChange={handleInputSearch}
-                placeholder="Buscar superhéroe..."
-            /> 
-            <input type="submit" value="Buscar"/>
-            
-            */}
             <div className="input-group mb-3">
                 <input
                     onChange={handleInputSearch}

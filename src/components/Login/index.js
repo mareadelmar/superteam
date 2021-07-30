@@ -2,31 +2,41 @@ import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import "../../assets/styles/components/Login.css";
 import { useUserData } from "../../hooks/useUserData";
+import Swal from "sweetalert2";
 
 const Login = () => {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
-    const { getLogin, isLogged, errorMessage } = useUserData();
+    const [errorMessage, setErrorMessage] = useState(false);
+    const { getLogin, isLogged, showAlert } = useUserData();
     let history = useHistory();
 
     useEffect(() => {
         console.log(isLogged);
         if (isLogged) {
-            console.log("desde componente: isLogged true");
             history.push("/");
-            // si recibe una función onLogin (para cerrar modal si lo hago) que la ejecute
-            //onLogin && onLogin();
         }
     }, [history, isLogged]);
 
     const handleSubmitLogin = (e) => {
         e.preventDefault();
-        console.log("login in desde componente");
+        if (email === "" || password === "") {
+            setErrorMessage("Ingresa un email y una contraseña");
+            return;
+        }
         getLogin({ email, password });
+
+        showAlert &&
+            Swal.fire({
+                title: "Error al iniciar de sesión",
+                text: showAlert,
+                icon: "error",
+                confirmButtonText: "Ok",
+            });
     };
 
     return (
-        <section className="flex login-container">
+        <section className="login-container d-flex justify-content-center align-items-center">
             <form onSubmit={handleSubmitLogin}>
                 <h4>Ingresá a tu cuenta:</h4>
                 <div className="form-floating mb-3">
@@ -55,7 +65,7 @@ const Login = () => {
                 ) : null}
                 <input
                     type="submit"
-                    className="btn w-100 btn-lg btn-primary mt-3 mb-3"
+                    className="btn w-100 btn-lg btn-custom mt-3 mb-3"
                     value="Login"
                 />
                 <p>

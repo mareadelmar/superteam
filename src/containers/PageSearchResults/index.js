@@ -8,13 +8,17 @@ import Loader from "../../components/Loader";
 
 const PageSearchResults = () => {
     const { keyword } = useParams();
-    const { results, loading } = useCharacters({ keyword });
+    const { results, loading, errorMessage } = useCharacters({ keyword });
+    const resultsHeading = errorMessage
+        ? errorMessage
+        : `${results.length} resultados de búsqueda`;
 
     if (loading) return <Loader />;
     return (
         <section className="container search-container">
             <SearchBar />
-            <ListOfItems list={results} />
+            <h4 className="text-center">{resultsHeading}</h4>
+            {!errorMessage && <ListOfItems list={results} />}
         </section>
     );
 };

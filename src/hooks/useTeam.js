@@ -1,64 +1,91 @@
-import { useContext, useCallback } from "react";
+import { useContext, useCallback, useState, useEffect } from "react";
 import UserContext from "../context/UserDataContext";
-import ResultsContext from "../context/SearchResultContext";
 
 export const useTeam = () => {
-    const { results } = useContext(ResultsContext);
     const { teamGood, teamBad, setTeamGood, setTeamBad } =
         useContext(UserContext);
+    const [teamBestPower, setTeamBestPower] = useState([]);
+    const [teamPowerstats, setTeamPowerstats] = useState([]);
 
-    const addToTeam = useCallback(
-        ({ id, alignment }) => {
-            let selectedCharacter = "";
-            results.map((item) => {
-                if (item.id === id) {
-                    selectedCharacter = item;
-                    console.log(item);
-                }
-                return selectedCharacter;
+    useEffect(() => {
+        const totalTeam = [...teamGood, ...teamBad];
+        if (totalTeam.length === 0) return;
+
+        const obj = {
+            intelligence: 0,
+            strength: 0,
+            speed: 0,
+            durability: 0,
+            power: 0,
+            combat: 0,
+        };
+
+        // sumar powerstats en un solo objeto
+        for (let i of totalTeam) {
+            Object.keys(i.powerstats).forEach((key) => {
+                if (i.powerstats[key] === "null") return;
+                obj[key] += Number(i.powerstats[key]);
             });
+        }
 
-            if (alignment === "good") {
-                setTeamGood((currentArray) =>
-                    currentArray.concat(selectedCharacter)
-                );
-                console.log(teamGood);
-            }
-            if (alignment === "bad") {
-                setTeamBad((currentArray) =>
-                    currentArray.concat(selectedCharacter)
-                );
-                console.log(teamBad);
-            }
-            console.log(selectedCharacter, teamBad, teamGood);
+        // convertir el objeto en un array para ordenarlo
+        let array = [];
+        Object.entries(obj).map((entry) => {
+            array.push(entry);
+        });
+
+        // ordenar array de forma descendiente
+        let orderArray = array.sort((a, b) => a[1] - b[1]);
+        orderArray.reverse();
+
+        setTeamPowerstats(orderArray);
+        setTeamBestPower(orderArray[0]);
+    }, [teamBad, teamGood]);
+
+    const addToGood = useCallback(
+        ({ cardData }) => {
+            console.log("addToGood", cardData);
+            setTeamGood([...teamGood, cardData]);
+            console.log(teamGood);
         },
-        [results, setTeamGood, setTeamBad, teamBad, teamGood]
+        [setTeamGood, teamGood]
     );
 
-    const removeFromTeam = useCallback(
-        ({ id, alignment }) => {
-            console.log("entrando a eliminar", alignment);
-            if (alignment === "good") {
-                const newTeam = teamGood.filter((item) => {
-                    console.log(id, item.id);
-
-                    return item.id !== id;
-                });
-                setTeamGood(newTeam);
-            } else {
-                const newTeam = teamBad.filter((item) => {
-                    console.log(id, item.id);
-                    return item.id !== id;
-                });
-                setTeamBad(newTeam);
-            }
-            console.log("eliminar miembro", teamBad, teamGood);
+    const addToBad = useCallback(
+        ({ cardData }) => {
+            console.log("addtoBad", cardData);
+            setTeamBad([...teamBad, cardData]);
+            console.log(teamBad);
         },
-        [teamGood, teamBad, setTeamGood, setTeamBad]
+        [setTeamBad, teamBad]
+    );
+
+    const removeFromBad = useCallback(
+        ({ id }) => {
+            const newTeam = teamBad.filter((item) => item.id !== id);
+            setTeamBad(newTeam);
+            console.log("eliminar bad", id, newTeam);
+        },
+        [setTeamBad, teamBad]
+    );
+
+    const removeFromGood = useCallback(
+        ({ id }) => {
+            const newTeam = teamGood.filter((item) => item.id !== id);
+            setTeamGood(newTeam);
+            console.log("eliminar good", id, newTeam);
+        },
+        [setTeamGood, teamGood]
     );
 
     return {
-        addToTeam,
-        removeFromTeam,
+        teamGood,
+        teamBad,
+        teamPowerstats,
+        teamBestPower,
+        addToGood,
+        addToBad,
+        removeFromGood,
+        removeFromBad,
     };
 };

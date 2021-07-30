@@ -1,32 +1,34 @@
 body {
+    background: var(--background-color) !important;
+    color: var(--light-color) !important;
+    min-height: 100vh;
     margin: 0;
     box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-        "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 /*
 VARIABLES DE COLORES:
+--primary-color: #0baccc;
+    --dark-color: #2f5061;
+    --darkprimary-color: #1a8991;
+    --secondary-color: #004369;
+    --light-color: #f2f2f2;
+    --delete-color: grey;
 */
 
 :root {
-    --primary-color: #12a6b1;
-    --background-dark: #212121;
-    --darkprimary-color: #1a8991;
-    --secondary-color: #1b2e3c;
+    --primary-color: #e57f84;
+    --background-color: #004369;
+    --secondary-color: #0baccc;
     --light-color: #f2f2f2;
-}
-
-.flex {
-    display: flex;
+    --delete-color: grey;
 }
 
 .btn-custom {
-    background-color: var(--primary-color);
-    color: var(--light-color);
+    background-color: var(--primary-color) !important;
+    color: var(--light-color) !important;
     *display: inline-block;
     *color: #212529;
     cursor: pointer;
@@ -36,6 +38,6 @@ VARIABLES DE COLORES:
     border-radius: 0.5rem;
 }
 
-.btn-custom:hover {
-    color: grey;
+.color-primary {
+    color: var(--primary-color) !important;
 }

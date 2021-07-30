@@ -5,21 +5,26 @@ import ResultsContext from "../context/SearchResultContext";
 export function useCharacters({ keyword }) {
     const { results, setResults } = useContext(ResultsContext);
     const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null);
 
     useEffect(() => {
         setLoading(true);
         getCharacters({ keyword }).then((res) => {
-            /*
-            Condicionar si arreglo está vacío y devolver mensaje
-            */
-            setResults(res);
+            console.log(res);
+            if (res === []) {
+                console.log("es un array vacío");
+                setErrorMessage("No hay resultados para esta búsqueda");
+                setResults([]);
+                return;
+            }
             setLoading(false);
+            setResults(res);
         });
     }, [keyword, setResults]);
 
     return {
         loading,
         results,
-        setResults,
+        errorMessage,
     };
 }

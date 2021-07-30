@@ -1,8 +1,4 @@
-.btn {
-    background-color: var(--primary-color);
-}
-
-@media (min-width: 800px) {
+@media (min-width: 992px) {
     .searchbar-container {
         justify-content: center;
     }

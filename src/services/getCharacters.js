@@ -5,7 +5,7 @@ export function getCharacters({ keyword }) {
     const url = `${API_URL}/${API_KEY}/search/${keyword}/`;
 
     return axios.get(url).then((data) => {
-        console.log(data.data.results);
+        if (data.data.response === "error") return [];
 
         let results = data.data.results.map((item) => {
             const { id, name, powerstats, appearance, work, image, biography } =

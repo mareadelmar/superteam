@@ -8,19 +8,17 @@ export function useUserData() {
 
     const [loading, setLoading] = useState(false);
     const [isLogged, setIsLogged] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
+    const [showAlert, setShowAlert] = useState("");
     let history = useHistory();
 
     // LOGIN
     const getLogin = useCallback(
         ({ email, password }) => {
-            console.log("entrando a login en el hook");
             setLoading(true);
             loginService({ email, password })
                 .then((dataToken) => {
-                    //console.log(dataToken.error);
                     if (dataToken === "Request failed with status code 401") {
-                        setErrorMessage(
+                        setShowAlert(
                             "El nombre o la contraseña no son correctos."
                         );
                         return;
@@ -48,7 +46,6 @@ export function useUserData() {
         console.log("logout en el hook");
         setToken(null);
         history.push("/");
-        //setIsLogged(false);
         // limpiar LOCALSTORAGE
         // window.localStorage.removeItem("token");
         // window.localStorage.removeItem(`team-${token}`);
@@ -74,6 +71,6 @@ export function useUserData() {
         isLogged,
         loading,
         token,
-        errorMessage,
+        showAlert,
     };
 }

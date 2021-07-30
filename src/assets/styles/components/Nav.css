@@ -1,0 +1,8 @@
+.nav a {
+    background: var(--primary-color) !important;
+    color: var(--light-color) !important;
+}
+
+.nav button {
+    color: var(--secondary-color) !important;
+}

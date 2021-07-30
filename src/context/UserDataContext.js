@@ -14,7 +14,6 @@ export function UserDataContext({ children }) {
     });
     const [teamGood, setTeamGood] = useState([]);
     const [teamBad, setTeamBad] = useState([]);
-    // ()=> window.localStorage.getItem(`team-${token}`);
 
     return (
         <UserContext.Provider

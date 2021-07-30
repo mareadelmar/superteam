@@ -2,63 +2,68 @@ import React, { useContext, useState } from "react";
 import "../../assets/styles/components/AddButton.css";
 import UserContext from "../../context/UserDataContext";
 import { useTeam } from "../../hooks/useTeam";
+import Swal from "sweetalert2";
 
-const AddButton = ({ id, alignment }) => {
+const AddButton = ({ cardData }) => {
+    const { id, alignment } = cardData;
     const [btnText, setBtnText] = useState("Agregar a mi equipo");
     const [btnClass, setBtnClass] = useState("btn-add");
     const { teamGood, teamBad } = useContext(UserContext);
-    const { addToTeam, removeFromTeam } = useTeam();
-    console.log(teamGood);
-    console.log(teamBad);
+    const { addToBad, addToGood } = useTeam();
 
-    // USAR UN MODAL PARA LOS ERRORES
-    const [showError, setShowError] = useState("");
-
-    const isNotFull = () => {
-        if (alignment === "good") {
-            console.log(teamGood.length);
-            return teamGood.length < 3;
-        } else {
-            return teamBad.length < 3;
-        }
-    };
-
-    const isAdded = () => {
-        if (alignment === "good") {
-            teamGood.some((item) => item.id === id);
-        } else {
-            teamBad.some((item) => item.id === id);
-        }
-        console.log(teamBad, teamGood);
+    const Modal = (title = "", html = "", text = "") => {
+        return Swal.fire({
+            title,
+            text,
+            confirmButtonText: "Ok",
+            html,
+            customClass: {
+                confirmButton: "btn-custom",
+            },
+        });
     };
 
     const handleAddToTeam = () => {
-        if (!isNotFull()) {
-            setShowError(
-                "Ya tiene tres integrantes con esta alineación, intenta con otro."
-            );
-            return;
+        if (alignment === "good") {
+            if (teamGood.some((item) => item.id === id)) {
+                Modal("Ya tienes lo tienes en tu equipo");
+                return;
+            }
+            if (teamGood.length === 3) {
+                Modal(
+                    "¡Ya tienes 3 personajes de alineación buena!",
+                    "Recuerda que solo puedes tener tres. Intenta con otro personaje o elimina alguno de tu equipo."
+                );
+                return;
+            }
+            addToGood({ cardData });
         }
-
-        // verificar si ya está agregado --> agregar/eliminar
-        if (!isAdded()) {
-            addToTeam({ id, alignment });
-            setBtnClass("btn-delete");
-            setBtnText("Eliminar de mi equipo");
-        } else {
-            console.log("remover del equipo", id);
+        if (alignment === "bad") {
+            if (teamBad.some((item) => item.id === id)) {
+                Modal("Ya tienes lo tienes en tu equipo");
+                return;
+            }
+            if (teamGood.length === 3) {
+                Modal(
+                    "¡Ya tienes 3 personajes de alineación mala!",
+                    "Recuerda que solo puedes tener tres. Intenta con otro personaje o elimina alguno de tu equipo."
+                );
+                return;
+            }
+            addToBad({ cardData });
         }
+        setBtnClass("btn-delete");
+        setBtnText("Eliminar de mi equipo");
     };
 
     return (
         <>
             <button
                 onClick={handleAddToTeam}
-                className={`btn btn-primary ${btnClass}`}
+                className={`btn btn-custom ${btnClass}`}
             >
                 {btnText}
             </button>
-            {setShowError ? <p>{showError}</p> : null}
         </>
     );
 };

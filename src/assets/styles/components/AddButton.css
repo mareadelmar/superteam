@@ -1,8 +1,4 @@
-/* .btn-add {
-    position: absolute;
-    bottom: 5px;
-} */
-
 .btn-delete {
-    background: orangered;
+    background: var(--delete-color) !important;
+    color: var(--light-color) !important;
 }

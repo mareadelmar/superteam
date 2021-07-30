@@ -2,7 +2,7 @@ import React from "react";
 
 const Loader = () => {
     return (
-        <div className="text-center">
+        <div className="d-flex justify-content-center align-items-center text-center vh-100">
             <p>loading...</p>
         </div>
     );
