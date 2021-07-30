@@ -7,7 +7,6 @@ import Swal from "sweetalert2";
 const Login = () => {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
-    const [errorMessage, setErrorMessage] = useState(false);
     const { getLogin, isLogged, showAlert } = useUserData();
     let history = useHistory();
 
@@ -20,7 +19,13 @@ const Login = () => {
     const handleSubmitLogin = (e) => {
         e.preventDefault();
         if (email === "" || password === "") {
-            setErrorMessage("Ingresa un email y una contraseña");
+            Swal.fire({
+                title: "Error al iniciar de sesión",
+                text: "Debes ingresar email y contraseña",
+                icon: "error",
+                confirmButtonText: "Ok",
+            });
+
             return;
         }
         getLogin({ email, password });
@@ -59,9 +64,6 @@ const Login = () => {
                     <label htmlFor="floatingPassword">Contraseña:</label>
                 </div>
 
-                {errorMessage ? (
-                    <div className="alert-danger">{errorMessage}</div>
-                ) : null}
                 <input
                     type="submit"
                     className="btn w-100 btn-lg btn-custom mt-3 mb-3"
