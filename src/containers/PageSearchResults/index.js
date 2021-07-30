@@ -1,5 +1,4 @@
 import React from "react";
-import "../../assets/styles/containers/PageSearch.css";
 import { useParams } from "react-router-dom";
 import { useCharacters } from "../../hooks/useCharacters";
 import SearchBar from "../../components/SearchBar";

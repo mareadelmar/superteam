@@ -1,5 +1,4 @@
-import React, { useContext, useState } from "react";
-import "../../assets/styles/components/AddButton.css";
+import React, { useContext, useState, useEffect } from "react";
 import UserContext from "../../context/UserDataContext";
 import { useTeam } from "../../hooks/useTeam";
 import Swal from "sweetalert2";
@@ -10,6 +9,15 @@ const AddButton = ({ cardData }) => {
     const [btnClass, setBtnClass] = useState("btn-add");
     const { teamGood, teamBad } = useContext(UserContext);
     const { addToBad, addToGood } = useTeam();
+
+    useEffect(() => {
+        const isAddedGood = teamGood.some((item) => item.id === id);
+        const isAddedBad = teamBad.some((item) => item.id === id);
+        if (isAddedGood || isAddedBad) {
+            setBtnClass("btn-delete");
+            setBtnText("Agregado al equipo");
+        }
+    }, [id, teamBad, teamGood]);
 
     const Modal = (title = "", html = "", text = "") => {
         return Swal.fire({
@@ -43,7 +51,7 @@ const AddButton = ({ cardData }) => {
                 Modal("Ya tienes lo tienes en tu equipo");
                 return;
             }
-            if (teamGood.length === 3) {
+            if (teamBad.length === 3) {
                 Modal(
                     "¡Ya tienes 3 personajes de alineación mala!",
                     "Recuerda que solo puedes tener tres. Intenta con otro personaje o elimina alguno de tu equipo."
@@ -53,7 +61,7 @@ const AddButton = ({ cardData }) => {
             addToBad({ cardData });
         }
         setBtnClass("btn-delete");
-        setBtnText("Eliminar de mi equipo");
+        setBtnText("Agregado al equipo");
     };
 
     return (

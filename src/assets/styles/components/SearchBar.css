@@ -1,9 +1,0 @@
-@media (min-width: 992px) {
-    .searchbar-container {
-        justify-content: center;
-    }
-
-    .searchbar-container .input-group {
-        width: 70%;
-    }
-}

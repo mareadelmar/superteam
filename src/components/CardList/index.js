@@ -56,7 +56,7 @@ const CardList = ({ cardData }) => {
     };
 
     return (
-        <div className="col-12">
+        <div className="col-12 col-lg-6">
             <div className="card mt-3 d-flex flex-row shadow-sm">
                 <div className="card-body d-flex align-items-center">
                     <object data={url} className="cardlist-img mx-3">

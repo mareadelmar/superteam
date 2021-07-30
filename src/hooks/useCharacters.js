@@ -10,9 +10,7 @@ export function useCharacters({ keyword }) {
     useEffect(() => {
         setLoading(true);
         getCharacters({ keyword }).then((res) => {
-            console.log(res);
             if (res === []) {
-                console.log("es un array vacío");
                 setErrorMessage("No hay resultados para esta búsqueda");
                 setResults([]);
                 return;

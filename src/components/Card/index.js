@@ -1,5 +1,4 @@
 import React from "react";
-//import { Link } from "react-router-dom";
 import AddButton from "../AddButton";
 import notFound from "../../assets/statics/not-found.png";
 

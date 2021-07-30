@@ -12,7 +12,6 @@ const Login = () => {
     let history = useHistory();
 
     useEffect(() => {
-        console.log(isLogged);
         if (isLogged) {
             history.push("/");
         }

@@ -6,11 +6,32 @@ export const useTeam = () => {
         useContext(UserContext);
     const [teamBestPower, setTeamBestPower] = useState([]);
     const [teamPowerstats, setTeamPowerstats] = useState([]);
+    const [totalWeight, setTotalWeight] = useState(0);
+    const [totalHeight, setTotalHeight] = useState(0);
 
     useEffect(() => {
         const totalTeam = [...teamGood, ...teamBad];
         if (totalTeam.length === 0) return;
 
+        // HEIGHT & WEIGHT
+        let totalWeightVar = 0;
+        let totalHeightVar = 0;
+        totalTeam.map((item) => {
+            const { weight, height } = item.appearance;
+            const wArr = weight[1].split(" ");
+            const hArr = height[1].split(" ");
+
+            const numberWeight = Number(wArr[0]);
+            const numberHeight = Number(hArr[0]);
+
+            totalWeightVar += numberWeight;
+            totalHeightVar += numberHeight;
+        });
+
+        setTotalWeight(Math.round(totalWeightVar / totalTeam.length));
+        setTotalHeight(Math.round(totalHeightVar / totalTeam.length));
+
+        // POWERSTATS
         const obj = {
             intelligence: 0,
             strength: 0,
@@ -29,13 +50,13 @@ export const useTeam = () => {
         }
 
         // convertir el objeto en un array para ordenarlo
-        let array = [];
+        let arrayPowerstats = [];
         Object.entries(obj).map((entry) => {
-            array.push(entry);
+            arrayPowerstats.push(entry);
         });
 
         // ordenar array de forma descendiente
-        let orderArray = array.sort((a, b) => a[1] - b[1]);
+        let orderArray = arrayPowerstats.sort((a, b) => a[1] - b[1]);
         orderArray.reverse();
 
         setTeamPowerstats(orderArray);
@@ -44,18 +65,14 @@ export const useTeam = () => {
 
     const addToGood = useCallback(
         ({ cardData }) => {
-            console.log("addToGood", cardData);
             setTeamGood([...teamGood, cardData]);
-            console.log(teamGood);
         },
         [setTeamGood, teamGood]
     );
 
     const addToBad = useCallback(
         ({ cardData }) => {
-            console.log("addtoBad", cardData);
             setTeamBad([...teamBad, cardData]);
-            console.log(teamBad);
         },
         [setTeamBad, teamBad]
     );
@@ -64,7 +81,6 @@ export const useTeam = () => {
         ({ id }) => {
             const newTeam = teamBad.filter((item) => item.id !== id);
             setTeamBad(newTeam);
-            console.log("eliminar bad", id, newTeam);
         },
         [setTeamBad, teamBad]
     );
@@ -73,7 +89,6 @@ export const useTeam = () => {
         ({ id }) => {
             const newTeam = teamGood.filter((item) => item.id !== id);
             setTeamGood(newTeam);
-            console.log("eliminar good", id, newTeam);
         },
         [setTeamGood, teamGood]
     );
@@ -83,6 +98,8 @@ export const useTeam = () => {
         teamBad,
         teamPowerstats,
         teamBestPower,
+        totalWeight,
+        totalHeight,
         addToGood,
         addToBad,
         removeFromGood,

@@ -23,7 +23,6 @@ export function useUserData() {
                         );
                         return;
                     }
-                    console.log(dataToken, "logueado correctamente en el hook");
                     setLoading(false);
                     setToken(dataToken);
                     window.localStorage.setItem("token", dataToken);
@@ -35,7 +34,6 @@ export function useUserData() {
                     console.error(err);
                     console.log(err);
                     window.localStorage.removeItem("token");
-                    // ??? --> window.localStorage.removeItem(`team-${token}`);
                 });
         },
         [setToken]
@@ -43,21 +41,16 @@ export function useUserData() {
 
     // LOGOUT
     const getLogout = useCallback(() => {
-        console.log("logout en el hook");
         setToken(null);
+        window.localStorage.removeItem("token");
         history.push("/");
-        // limpiar LOCALSTORAGE
-        // window.localStorage.removeItem("token");
-        // window.localStorage.removeItem(`team-${token}`);
     }, [setToken, history]);
 
     useEffect(() => {
         if (token !== null && token !== undefined && token !== "null") {
-            console.log("está logueado", token);
             setIsLogged(true);
         } else if (token === undefined) {
             setIsLogged(false);
-            console.log("error", token);
             setToken(null);
         } else {
             setToken(null);

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../../assets/styles/components/SearchBar.css";
 import { useHistory } from "react-router-dom";
 import { useUserData } from "../../hooks/useUserData";
 
@@ -24,24 +23,28 @@ const SearchBar = () => {
 
     return (
         <form
-            className="d-flex searchbar-container mt-5 mb-5"
+            className="container searchbar-container mt-5 mb-5"
             onSubmit={handleSearchSubmit}
         >
-            <div className="input-group mb-3">
-                <input
-                    onChange={handleInputSearch}
-                    type="text"
-                    className="form-control"
-                    placeholder="Buscar superhéroe..."
-                    aria-label="Buscador"
-                    aria-describedby="input-search"
-                />
-                <input
-                    className="btn-custom"
-                    type="submit"
-                    id="input-search"
-                    value="Buscar"
-                />
+            <div className="row d-flex justify-content-center">
+                <div className="col-12 col-lg-8">
+                    <div className="input-group mb-3">
+                        <input
+                            onChange={handleInputSearch}
+                            type="text"
+                            className="form-control"
+                            placeholder="Buscar superhéroe..."
+                            aria-label="Buscador"
+                            aria-describedby="input-search"
+                        />
+                        <input
+                            className="btn-custom"
+                            type="submit"
+                            id="input-search"
+                            value="Buscar"
+                        />
+                    </div>
+                </div>
             </div>
         </form>
     );

@@ -4,11 +4,17 @@ import ListOfItems from "../ListOfItems";
 import ListOfPowers from "../ListOfPowers";
 
 const UserHomePage = () => {
-    const { teamPowerstats, teamBestPower, teamGood, teamBad } = useTeam();
+    const {
+        teamPowerstats,
+        teamBestPower,
+        teamGood,
+        teamBad,
+        totalWeight,
+        totalHeight,
+    } = useTeam();
     const [selectedTeam, setSelectedTeam] = useState([]);
 
     useEffect(() => {
-        console.log(teamGood, teamBad);
         setSelectedTeam([...teamGood, ...teamBad]);
     }, [teamGood, teamBad]);
 
@@ -18,6 +24,8 @@ const UserHomePage = () => {
                 <ListOfPowers
                     powers={teamPowerstats}
                     bestPower={teamBestPower}
+                    weight={totalWeight}
+                    height={totalHeight}
                 />
             )}
             <ListOfItems list={selectedTeam} />
