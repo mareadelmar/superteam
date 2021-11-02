@@ -1,5 +1,11 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Sitio para elegir un equipo de superhéroes, realizado con React y los recursos de [SuperHero API](https://superheroapi.com/).
+Realizado para el challenge de la aceleración de Alkemy.
 
+Versión deployada: [https://superteam-alkemy.web.app/](https://superteam-alkemy.web.app/)
+
+
+![](https://raw.githubusercontent.com/mareadelmar/superteam/main/src/assets/statics/ScreenshotSuperteam.png)
+---
 ## Available Scripts
 
 In the project directory, you can run:
@@ -26,9 +32,3 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
